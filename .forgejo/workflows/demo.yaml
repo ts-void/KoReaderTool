@@ -16,8 +16,8 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install godot-gdscript-toolkit
-        run: pip install godot-gdscript-toolkit
+      - name: Install gdtoolkit
+        run: pip install "gdtoolkit==4.*"
 
       - name: Run static analysis with gdlint
         run: gdlint .
