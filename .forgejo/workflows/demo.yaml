@@ -1,6 +1,23 @@
-on: [push]
+name: Static Code Analysis
+
+on:
+  push:
+  pull_request:
+
 jobs:
-  test:
+  lint:
     runs-on: codeberg-small
     steps:
-      - run: echo All good!
+      - name: Checkout repository
+        uses: https://code.forgejo.org/actions/checkout@v4
+
+      - name: Set up Python
+        uses: https://code.forgejo.org/actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install godot-gdscript-toolkit
+        run: pip install godot-gdscript-toolkit
+
+      - name: Run static analysis with gdlint
+        run: gdlint .
