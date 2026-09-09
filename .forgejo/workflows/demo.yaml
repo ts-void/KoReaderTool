@@ -1,6 +1,6 @@
 on: [push]
 jobs:
   test:
-    runs-on: godot
+    runs-on: codeberg-small
     steps:
       - run: echo All good!
