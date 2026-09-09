@@ -1,0 +1,105 @@
+[gd_scene format=3 uid="uid://x08piuqy66fm"]
+
+[ext_resource type="Script" uid="uid://ddbqrdhjonnub" path="res://scripts/app.gd" id="1_8e8e8"]
+
+[node name="App" type="Panel" unique_id=929971101]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8e8e8")
+
+[node name="RootContainer" type="VBoxContainer" parent="." unique_id=1378651684]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -558.0
+offset_top = -310.0
+offset_right = 560.0
+offset_bottom = 306.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 5
+
+[node name="TitelLabel" type="Label" parent="RootContainer" unique_id=1189099810]
+layout_mode = 2
+
+[node name="AutorLabel" type="Label" parent="RootContainer" unique_id=598984959]
+layout_mode = 2
+
+[node name="SpracheLabel" type="Label" parent="RootContainer" unique_id=367347036]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="RootContainer" unique_id=1621895980]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="RootContainer" unique_id=1825357773]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="RootContainer/HBoxContainer" unique_id=846046970]
+layout_mode = 2
+text = "Fortschritt:     "
+
+[node name="Fortschrittsbalken" type="ProgressBar" parent="RootContainer/HBoxContainer" unique_id=657512274]
+layout_mode = 2
+
+[node name="SeitenLabel" type="Label" parent="RootContainer" unique_id=712729433]
+layout_mode = 2
+
+[node name="StatusLabel" type="Label" parent="RootContainer" unique_id=1053936972]
+layout_mode = 2
+
+[node name="HighlightsLabel" type="Label" parent="RootContainer" unique_id=96130160]
+layout_mode = 2
+
+[node name="NotizenLabel" type="Label" parent="RootContainer" unique_id=2030747504]
+layout_mode = 2
+
+[node name="HervorhebungBox" type="VBoxContainer" parent="RootContainer" unique_id=565068506]
+layout_mode = 2
+
+[node name="HervorhebungLabel" type="Label" parent="RootContainer/HervorhebungBox" unique_id=1364409547]
+layout_mode = 2
+
+[node name="HervorhebungText" type="RichTextLabel" parent="RootContainer/HervorhebungBox" unique_id=830564437]
+visible = false
+custom_maximum_size = Vector2(-1, 200)
+propagate_maximum_size = true
+layout_mode = 2
+text = "Hervorhebungen"
+fit_content = true
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="RootContainer" unique_id=1625269273]
+layout_mode = 2
+
+[node name="NeuladenButton" type="Button" parent="RootContainer/HBoxContainer2" unique_id=436265612]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "NEU LADEN"
+
+[node name="ExportButton" type="Button" parent="RootContainer/HBoxContainer2" unique_id=867677594]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "EXPORT"
+
+[node name="FileLoadButton" type="Button" parent="RootContainer/HBoxContainer2" unique_id=1947013229]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "DATEI LADEN"
+
+[node name="HSeparator4" type="HSeparator" parent="RootContainer" unique_id=103087377]
+layout_mode = 2
+
+[node name="PfadLabel" type="Label" parent="RootContainer" unique_id=731741781]
+layout_mode = 2
+
+[node name="FileDialog" type="FileDialog" parent="." unique_id=640197009]
+title = "Open a File"
+file_mode = 0
+access = 2
+
+[connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
