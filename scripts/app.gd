@@ -1,5 +1,10 @@
 extends Panel
 
+# 🔧 HIER DEN PFAD ZU DEINER metadata.epub.lua ANPASSEN!
+var ebook_name: String = "export"
+var metadata_pfad: String = "./metadata.epub.lua"
+var highlight_content: String = ""
+
 @onready var titel_label: Label = $RootContainer/TitelLabel
 @onready var autor_label: Label = $RootContainer/AutorLabel
 @onready var sprache_label: Label = $RootContainer/SpracheLabel
@@ -21,12 +26,6 @@ extends Panel
 @onready var h_separator_4: HSeparator = $RootContainer/HSeparator4
 @onready var pfad_label: Label = $RootContainer/PfadLabel
 @onready var file_dialog: FileDialog = $FileDialog
-
-
-# 🔧 HIER DEN PFAD ZU DEINER metadata.epub.lua ANPASSEN!
-var ebook_name = "export"
-var metadata_pfad = "./metadata.epub.lua"
-var highlight_content: String = ""
 
 
 func _ready():
