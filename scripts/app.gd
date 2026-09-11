@@ -2,7 +2,7 @@ extends Panel
 
 # 🔧 HIER DEN PFAD ZU DEINER metadata.epub.lua ANPASSEN!
 var ebook_name: String = "export"
-var metadata_pfad: String = "./metadata.epub.lua"
+var metadata_pfad: String = "./exports/metadata.epub.lua"
 var highlight_content: String = ""
 
 @onready var titel_label: Label = $RootContainer/TitelLabel
@@ -33,7 +33,29 @@ func _ready():
 	export_button.pressed.connect(_on_export_pressed)
 	file_load_button.pressed.connect(_on_open_file_dialog)
 	pfad_label.text = "Pfad: " + metadata_pfad
+	hervorhebung_text.bbcode_enabled = true
+	_set_richtextbox_design()
 	lade_metadaten()
+
+
+func _set_richtextbox_design():
+	var box_style := StyleBoxFlat.new()
+	box_style.bg_color = Color.from_rgba8(60, 60, 60, 255)
+	box_style.corner_radius_top_left = 8
+	box_style.corner_radius_top_right = 8
+	box_style.corner_radius_bottom_left = 8
+	box_style.corner_radius_bottom_right = 8
+	box_style.content_margin_left = 12
+	box_style.content_margin_right = 12
+	box_style.content_margin_top = 8
+	box_style.content_margin_bottom = 8
+	
+	box_style.border_color = Color.from_rgba8(90, 90, 90, 255)
+	box_style.border_width_top = 1
+	box_style.border_width_bottom = 1
+	box_style.border_width_right = 1
+	box_style.border_width_left = 1
+	hervorhebung_text.add_theme_stylebox_override("normal", box_style)
 
 
 func lade_metadaten():
@@ -102,28 +124,63 @@ func _show_highlights(stats, metadata):
 		notizen_label.text = "📝 Notizen: " + str(notes)
 		var annotations = metadata.get("annotations")
 
-		_fill_highlight_box(annotations, highlights)
+		_fill_highlight_box(annotations, highlights, notes)
 	else:
 		highlights_label.text = "🖍️ Hervorhebungen: 0"
 		notizen_label.text = "📝 Notizen: 0"
-		hervorhebung_text.visible = false
 
 
-func _fill_highlight_box(annotations, highlights):
-	if annotations is LuaTable and highlights > 0:
-		for i in range(highlights):
+func _fill_highlight_box(annotations, highlights, notes):
+	hervorhebung_text.clear()
+	var annotations_text: String = _get_highlights(annotations, highlights)
+	print("=================================")
+	print(annotations_text)
+	print("=================================")
+	print(hervorhebung_text.text)
+	print("=================================")
+	
+	#hervorhebung_text.push_bgcolor(Color.from_rgba8(255, 255, 0, 255))
+	hervorhebung_text.add_text(annotations_text)
+	hervorhebung_text.pop()
+	highlight_content = annotations_text
+
+
+func _get_highlights(annotations, highlights) -> String:
+	var result: String = ""
+	if annotations is LuaTable:
+		for i in annotations.length():
 			var erste = annotations.get(i + 1)
 			if erste is LuaTable:
-				var text = erste.get("text", "")
-				var seite = erste.get("pageno", 0)
-				hervorhebung_text.text = hervorhebung_text.text + "Seite " + str(seite) + "\n" + text + "\n\n"
-				print(hervorhebung_text.text)
-				hervorhebung_text.visible = true
-			else:
-				hervorhebung_text.visible = false
-	else:
-		hervorhebung_text.visible = false
-	highlight_content = hervorhebung_text.text
+				var content = erste.get("text", "")
+				var page = erste.get("pageno", 0)
+				var note = erste.get("note", "")
+				var color = erste.get("color", "")
+				
+				var page_text = _get_formatted_page_text(page, color)
+				var content_text = _get_formatted_content_text(content)
+				var note_text = _get_formatted_note_text(note)
+				
+				result = result + "=".repeat(75) + "\n\n"
+				result = result + page_text + "\n" + content_text + "\n" + note_text + "\n"
+	result = result + "=".repeat(75)
+	return result
+
+
+func _get_formatted_note_text(note) -> String:
+	var note_text = ""
+	if str(note) != "":
+		note_text = note_text + "\n" + "-".repeat(75)
+		note_text = note_text + "\nNote:" + "\n" + str(note) + "\n"
+		note_text = note_text + "-".repeat(75) + "\n"
+	return note_text
+
+
+func _get_formatted_page_text(page, color) -> String:
+	return "Page " + str(page) + " (" + str(color) + ")"
+
+
+func _get_formatted_content_text(content):
+	return str(content)
 
 
 func _setze_fehlermeldung(msg: String):
@@ -135,7 +192,6 @@ func _setze_fehlermeldung(msg: String):
 	status_label.text = msg
 	highlights_label.text = ""
 	notizen_label.text = ""
-	hervorhebung_text.visible = false
 
 
 func save_to_file(content, filename):
@@ -145,6 +201,7 @@ func save_to_file(content, filename):
 
 func _on_neuladen_pressed():
 	hervorhebung_text.text = ""
+	pfad_label.text = metadata_pfad
 	lade_metadaten()
 
 

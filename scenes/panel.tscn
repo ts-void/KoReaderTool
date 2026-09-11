@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://x08piuqy66fm"]
 
 [ext_resource type="Script" uid="uid://ddbqrdhjonnub" path="res://scripts/app.gd" id="1_8e8e8"]
+[ext_resource type="FontFile" uid="uid://dmvyvgydl2d5w" path="res://assets/fonts/IoskeleyMono-SemiBold.woff2" id="2_ixbsq"]
+[ext_resource type="FontFile" uid="uid://daoxsc7b662of" path="res://assets/fonts/IoskeleyMono-Regular.woff2" id="2_wdgw4"]
 
 [node name="App" type="Panel" unique_id=929971101]
 anchors_preset = 15
@@ -23,7 +25,7 @@ offset_right = 560.0
 offset_bottom = 306.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 5
+theme_override_constants/separation = 7
 
 [node name="TitelLabel" type="Label" parent="RootContainer" unique_id=1189099810]
 layout_mode = 2
@@ -66,12 +68,17 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="HervorhebungText" type="RichTextLabel" parent="RootContainer/HervorhebungBox" unique_id=830564437]
-visible = false
 custom_maximum_size = Vector2(-1, 200)
 propagate_maximum_size = true
 layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("2_wdgw4")
+theme_override_fonts/mono_font = ExtResource("2_ixbsq")
 text = "Hervorhebungen"
 fit_content = true
+
+[node name="HSeparator4" type="HSeparator" parent="RootContainer" unique_id=103087377]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="RootContainer" unique_id=1625269273]
 layout_mode = 2
@@ -91,7 +98,8 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "DATEI LADEN"
 
-[node name="HSeparator4" type="HSeparator" parent="RootContainer" unique_id=103087377]
+[node name="HSeparator5" type="HSeparator" parent="RootContainer" unique_id=985285909]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
 [node name="PfadLabel" type="Label" parent="RootContainer" unique_id=731741781]
