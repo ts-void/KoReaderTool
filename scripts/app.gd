@@ -49,7 +49,6 @@ func _set_richtextbox_design():
 	box_style.content_margin_right = 12
 	box_style.content_margin_top = 8
 	box_style.content_margin_bottom = 8
-	
 	box_style.border_color = Color.from_rgba8(90, 90, 90, 255)
 	box_style.border_width_top = 1
 	box_style.border_width_bottom = 1
@@ -124,28 +123,27 @@ func _show_highlights(stats, metadata):
 		notizen_label.text = "📝 Notizen: " + str(notes)
 		var annotations = metadata.get("annotations")
 
-		_fill_highlight_box(annotations, highlights, notes)
+		_fill_highlight_box(annotations)
 	else:
 		highlights_label.text = "🖍️ Hervorhebungen: 0"
 		notizen_label.text = "📝 Notizen: 0"
 
 
-func _fill_highlight_box(annotations, highlights, notes):
+func _fill_highlight_box(annotations):
 	hervorhebung_text.clear()
-	var annotations_text: String = _get_highlights(annotations, highlights)
+	var annotations_text: String = _get_highlights(annotations)
 	print("=================================")
 	print(annotations_text)
 	print("=================================")
 	print(hervorhebung_text.text)
 	print("=================================")
-	
 	#hervorhebung_text.push_bgcolor(Color.from_rgba8(255, 255, 0, 255))
 	hervorhebung_text.add_text(annotations_text)
 	hervorhebung_text.pop()
 	highlight_content = annotations_text
 
 
-func _get_highlights(annotations, highlights) -> String:
+func _get_highlights(annotations) -> String:
 	var result: String = ""
 	if annotations is LuaTable:
 		for i in annotations.length():
@@ -155,11 +153,9 @@ func _get_highlights(annotations, highlights) -> String:
 				var page = erste.get("pageno", 0)
 				var note = erste.get("note", "")
 				var color = erste.get("color", "")
-				
 				var page_text = _get_formatted_page_text(page, color)
 				var content_text = _get_formatted_content_text(content)
 				var note_text = _get_formatted_note_text(note)
-				
 				result = result + "=".repeat(75) + "\n\n"
 				result = result + page_text + "\n" + content_text + "\n" + note_text + "\n"
 	result = result + "=".repeat(75)
