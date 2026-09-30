@@ -139,7 +139,6 @@ func _fill_highlight_box(annotations):
 	print("=================================")
 	#hervorhebung_text.push_bgcolor(Color.from_rgba8(255, 255, 0, 255))
 	hervorhebung_text.add_text(annotations_text)
-	hervorhebung_text.pop()
 	highlight_content = annotations_text
 
 
